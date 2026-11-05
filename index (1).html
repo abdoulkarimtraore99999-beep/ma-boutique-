@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ma Boutique – Chaussures, sacs et mèches à Abidjan</title>
+<meta name="description" content="Boutique en ligne à Abidjan : escarpins, sacs à main et mèches de tressage. Prix en FCFA, commande rapide par WhatsApp.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","name":"Ma Boutique","description":"Escarpins, sacs à main et mèches de tressage à Abidjan","address":{"@type":"PostalAddress","addressLocality":"Abidjan","addressCountry":"CI"},"priceRange":"FCFA"}</script>
+<style>
+:root{--bg:#faf7f5;--card:#fff;--tx:#1d1b1a;--mut:#6b6562;--ac:#c2410c;--bd:#e7e0dc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171413;--card:#221e1c;--tx:#f3eeeb;--mut:#a8a09b;--ac:#fb923c;--bd:#3a3330;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171413;--card:#221e1c;--tx:#f3eeeb;--mut:#a8a09b;--ac:#fb923c;--bd:#3a3330;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}
+header{padding:28px 16px 12px;text-align:center}
+h1{margin:0;font-size:1.6rem}
+header p{margin:6px 0 0;color:var(--mut)}
+main{max-width:900px;margin:0 auto;padding:8px 16px 110px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.pic{font-size:3.2rem;text-align:center}
+.card h2{font-size:1.05rem;margin:0}
+.card p{margin:0;color:var(--mut);font-size:.9rem}
+.price{font-weight:700;color:var(--ac)}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;background:var(--ac);color:#fff;font-weight:600}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:none;align-items:center;justify-content:space-between;gap:10px}
+.bar.on{display:flex}
+.bar span{font-weight:600}
+footer{text-align:center;color:var(--mut);font-size:.85rem;padding:10px 16px 30px}
+</style>
+</head>
+<body>
+<header>
+<h1>Ma Boutique</h1>
+<p>Chaussures, sacs et mèches neufs · N’dotré, Abidjan</p>
+</header>
+<main>
+<section class="grid" id="grid" aria-label="Produits"></section>
+</main>
+<div class="bar" id="bar"><span id="sum"></span><button id="order">Commander sur WhatsApp</button></div>
+<footer>Paiement à la livraison · Livraison à Abidjan</footer>
+<script>
+var WHATSAPP="2250501772167"; // remplace par ton numéro, sans + ni espaces
+var P=[
+{id:1,n:"Escarpins à talons neufs",d:"Escarpins habillés et boutique, plusieurs pointures.",p:8000,e:"👠"},
+{id:2,n:"Ensembles de sacs",d:"Ensembles et modèles milieu de gamme, neufs (6 000 à 25 000 FCFA).",p:6000,e:"👜"},
+{id:3,n:"Mèches de tressage",d:"Synthétiques et naturelles, neuves, plusieurs couleurs.",p:2500,e:"💇🏾‍♀️"},
+{id:4,n:"Petits sacs à main",d:"Petits modèles neufs (1 000 à 5 000 FCFA).",p:1000,e:"👜"},
+{id:5,n:"Sacs en cuir local",d:"Cuir local neuf (30 000 à 60 000 FCFA).",p:30000,e:"👛"}
+];
+var cart={};
+function f(x){return x.toLocaleString("fr-FR")+" FCFA"}
+var g=document.getElementById("grid");
+P.forEach(function(x){
+var c=document.createElement("article");c.className="card";
+c.innerHTML='<div class="pic" aria-hidden="true">'+x.e+'</div><h2>'+x.n+'</h2><p>'+x.d+'</p><div class="price">dès '+f(x.p)+'</div>';
+var b=document.createElement("button");b.textContent="Ajouter";
+b.onclick=function(){cart[x.id]=(cart[x.id]||0)+1;upd()};
+c.appendChild(b);g.appendChild(c);
+});
+function upd(){
+var q=0,t=0;
+P.forEach(function(x){var k=cart[x.id]||0;q+=k;t+=k*x.p});
+document.getElementById("bar").className="bar"+(q?" on":"");
+document.getElementById("sum").textContent=q+" article(s) · "+f(t);
+}
+document.getElementById("order").onclick=function(){
+var l=[],t=0;
+P.forEach(function(x){var k=cart[x.id]||0;if(k){l.push(k+" x "+x.n);t+=k*x.p}});
+var m="Bonjour, je veux commander :\n"+l.join("\n")+"\nTotal estimé : "+f(t);
+window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(m),"_blank");
+};
+</script>
+</body>
+</html>
